@@ -3,7 +3,38 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
+<!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
+<!--  If necessary, please modify the charset parameter to specify the        -->
+<!--  character set of your HTML page.                                        -->
+<!--  ----------------------------------------------------------------------  -->
+
+<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
+
+<!--  ----------------------------------------------------------------------  -->
+<!--  NOTE: Please add the following <FORM> element to your page.             -->
+<!--  ----------------------------------------------------------------------  -->
+
+<form action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+
+<input type=hidden name="oid" value="00D28000001JRhP">
+<input type=hidden name="retURL" value="http://theinstillery.com">
+
+
+<label for="first_name">First Name</label><input  id="first_name" maxlength="40" name="first_name" size="20" type="text" required/><br>
+
+<label for="last_name">Last Name</label><input  id="last_name" maxlength="80" name="last_name" size="20" type="text" required/><br>
+
+<label for="mobile">Mobile</label><input  id="mobile" maxlength="40" name="mobile" size="20" type="text" required/><br>
+
+<label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" required/><br>
+
+<label for="company">Company</label><input  id="company" maxlength="40" name="company" size="20" type="text" required/><br>
+
+<label for="title">Title</label><input  id="title" maxlength="40" name="title" size="20" type="text" /><br>
+
+<input type="submit" name="submit">
+
+</form>welcome#index'
 
   # get "data" => 'farm_blocks#get_iot_shadow'
   # post "data" => 'farm_blocks#get_iot_shadow'
