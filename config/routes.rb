@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
 
-  
+  root 'welcome#index'
 
   # get "data" => 'farm_blocks#get_iot_shadow'
   # post "data" => 'farm_blocks#get_iot_shadow'
