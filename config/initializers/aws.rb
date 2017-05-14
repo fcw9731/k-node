@@ -3,11 +3,11 @@ Aws.config.update({
   credentials: Aws::Credentials.new(ENV["AWS_ACCESS_KEY_ID"], ENV["AWS_SECRET_ACCESS_KEY"])
 })
 
-# sqs_client = Aws::SQS::Client.new(
-# access_key_id: ENV["AWS_ACCESS_KEY_ID"],
-# secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"],
-# region: 'us-east-1'
-# )
+sqs_client = Aws::SQS::Client.new(
+access_key_id: ENV["AWS_ACCESS_KEY_ID"],
+secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"],
+region: 'us-east-1'
+)
 $iot = Aws::IoT::Client.new(
 access_key_id: ENV["AWS_ACCESS_KEY_ID"],
 secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"]
