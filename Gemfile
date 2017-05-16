@@ -1,5 +1,5 @@
-source "https://rubygems.org"
-ruby "2.2.4"
+source 'https://rubygems.org'
+ruby '2.3.0'
 
 gem 'rails_12factor'
 
