@@ -50,9 +50,9 @@ gem 'geocoder'
 gem 'gmaps4rails'
 
 
-# AWS integration
-gem 'aws-sdk-rails'
-gem 'aws-sdk'
+# # AWS integration
+# gem 'aws-sdk-rails'
+# gem 'aws-sdk'
 
 # Frontend framework
 gem 'materialize-sass'
