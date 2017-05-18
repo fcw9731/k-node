@@ -1,4 +1,5 @@
 class WaterTanksController < ApplicationController
+  require "losant_rest"
 
   def new
     @farm_block = FarmBlock.find_by(id: params[:farm_block_id])
@@ -6,28 +7,108 @@ class WaterTanksController < ApplicationController
   end
 
   def create
-    @farm_block = FarmBlock.find_by(id: params[:farm_block_id])
-    @water_tank = WaterTank.new(water_tank_params)
-    @water_tank.farm_block_id = @farm_block.id
+    @error = '' 
+    if params[:height].present? && params[:capacity].present? && params[:name].present? && params[:device_EUI].present?
+      @farm_block = FarmBlock.find_by(id: params[:farm_block_id])
+      @water_tank = WaterTank.new(water_tank_params)
+      @water_tank.farm_block_id = @farm_block.id
 
-    if @water_tank.save
-      begin
-        Sensor.create_thing(@water_tank)
-        Sensor.create_thing_database(@water_tank)
-        Sensor.create_thing_rule(@water_tank)
-      rescue Aws::DynamoDB::Errors::ResourceInUseException => error
-        @errors = error
-        return render :action => 'new'
-      rescue Aws::DynamoDB::Errors::ValidationException => error
-        @errors = error
-        return render :action => 'new'
-      rescue Aws::IoT::Errors::InvalidRequestException => error
-        @errors = error
-        return render :action => 'new'
-      end
-      return redirect_to water_tank_path(@water_tank)
-    else
-      @errors = @water_tank.errors.messages
+      if @water_tank.save
+        # begin
+        #   Sensor.create_thing(@water_tank)
+        #   Sensor.create_thing_database(@water_tank)
+        #   Sensor.create_thing_rule(@water_tank)
+        # rescue Aws::DynamoDB::Errors::ResourceInUseException => error
+        #   @errors = error
+        #   return render :action => 'new'
+        # rescue Aws::DynamoDB::Errors::ValidationException => error
+        #   @errors = error
+        #   return render :action => 'new'
+        # rescue Aws::IoT::Errors::InvalidRequestException => error
+        #   @errors = error
+        #   return render :action => 'new'
+        # end
+
+        #========================================================# 
+        # Save as new Dashboard in Losant
+        #========================================================# 
+        begin
+          my_device = {
+            "name": water_tank_params['name'],          
+            "description": "New device" + water_tank_params['name'],
+            "tags": [
+              {              
+                "key": "sigfox_id",
+                "value": "1C8E99"
+              },
+              {
+                "key": "sensor_input",
+                "value": "1"
+              }
+            ],
+            "attributes": [
+              {
+                "name": "location",
+                "dataType": "gps"
+              },
+              {   
+                "name": "snr",
+                "dataType": "number"  
+              },
+              {
+                "name": "station",
+                "dataType": "string"
+              },
+              {
+                "name": "data",
+                "dataType": "string"
+              },  
+              {
+                "name": "avgSnr",
+                "dataType": "number"
+              },
+              {
+                "name": "rssi",
+                "dataType": "number"
+              }, 
+              {
+                "name": "seqNumber",
+                "dataType": "number"
+              },  
+              {
+                "name": "pulse",
+                "dataType": "number"
+              }, 
+              {
+                "name": "battery",
+                "dataType": "number"
+              },  
+              {            
+                "name": "totalflow",
+                "dataType": "number"             
+              }
+            ],
+            "deviceClass": "standalone"
+          }
+          client = LosantRest::Client.new(auth_token: session[:losant_auth_token], url: "https://api.losant.com")
+          result = client.devices.post(applicationId: '590bc7a2c8f13000014788c5', device: my_device)        
+
+          puts result
+        rescue => e
+          @error = e.to_s              
+          flash[:failure] = @error
+          return render :action => 'new'
+        end
+        #========================================================# 
+        # End save as new Dashboard in Losant
+        #========================================================# 
+
+        return redirect_to water_tank_path(@water_tank)      
+      else
+        @errors = @water_tank.errors.messages
+        flash[:failure] = @errors
+    else      
+      flash[:failure] = "Data not epmty"
       return render :action => 'new'
     end
   end
@@ -55,35 +136,35 @@ class WaterTanksController < ApplicationController
       end
     end
 
-    begin
-      resp = Sensor.scan_dynamodb(@water_tank)
-    rescue Aws::DynamoDB::Errors::ResourceNotFoundException => error
-      puts error
-      message = "Sensor Database Initialising!"
-      @error = {
-        message: message,
-        error:   error
-      }
-      gon.water_tank[:data] = []
-    rescue Aws::DynamoDB::Errors::ValidationException => error
-      puts error
-      message = "There is a problem with your sensor's device EUI!"
-      @error = {
-        error: error,
-        message: message
-      }
-    else
-      all_items = resp.items
+    # begin
+    #   resp = Sensor.scan_dynamodb(@water_tank)
+    # rescue Aws::DynamoDB::Errors::ResourceNotFoundException => error
+    #   puts error
+    #   message = "Sensor Database Initialising!"
+    #   @error = {
+    #     message: message,
+    #     error:   error
+    #   }
+    #   gon.water_tank[:data] = []
+    # rescue Aws::DynamoDB::Errors::ValidationException => error
+    #   puts error
+    #   message = "There is a problem with your sensor's device EUI!"
+    #   @error = {
+    #     error: error,
+    #     message: message
+    #   }
+    # else
+    #   all_items = resp.items
 
-      calculated_data = all_items.map do |entry|
-        flow_data = WaterTankData.new(@water_tank, entry["payload"]["data"], entry["timestamp"])
-        flow_data.convert_base64_to_decimal
-        flow_data.calculate_volume(flow_data.calculated.to_i, @water_tank)
-        flow_data
-      end
+    #   calculated_data = all_items.map do |entry|
+    #     flow_data = WaterTankData.new(@water_tank, entry["payload"]["data"], entry["timestamp"])
+    #     flow_data.convert_base64_to_decimal
+    #     flow_data.calculate_volume(flow_data.calculated.to_i, @water_tank)
+    #     flow_data
+    #   end
 
-      gon.water_tank[:data] = calculated_data
-    end
+    #   gon.water_tank[:data] = calculated_data
+    # end
 
     gon.water_tank[:sensor] = @water_tank
 

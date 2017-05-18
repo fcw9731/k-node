@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  require "losant_rest"
 
   def new
   end
@@ -12,7 +13,28 @@ class SessionsController < ApplicationController
         # cookies[:auth_token] = user.auth_token
         session[:user_id] = user.id
       end
-      redirect_to root_path
+
+      #========================================================# 
+      # Check authenticate user with Losant
+      #========================================================# 
+      begin        
+        myCredentials = {
+          "email": params[:email], 
+          "password": params[:password]
+        }    
+        client = LosantRest::Client.new(auth_token: nil, url: "https://api.losant.com")
+        authStatus = client.auth.authenticate_user(credentials: myCredentials)
+        if authStatus
+          session[:losant_auth_token] = authStatus['token']
+          redirect_to root_path        
+        end
+      rescue => e
+        flash[:failure] = "User Unauthorized with Losant"
+        redirect_to login_path
+      end
+      #========================================================# 
+      # End check authenticate user with Losant
+      #========================================================#       
 
     else
       flash[:failure] = "Incorrect password and email combination"

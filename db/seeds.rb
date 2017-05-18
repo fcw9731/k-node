@@ -64,6 +64,11 @@ jack = User.create!(first_name: "Jack",
               password: "JackDowns123",
               phone: "02102679303")
 
+water = User.create!(first_name: "Water",
+              last_name: "Metric",
+              email: "watermetricsolutions@gmail.com",
+              password: "WaterMetric2017",
+              phone: "012345678")
 
 # Farm Block seed
 

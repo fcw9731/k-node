@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   post "alert/seen" => "alerts#user_check_alert"
   get "get_all_alerts" => "alerts#get_all_alerts"
+  get "farm_block_water_tank" => "farm_blocks#show"
 
   resources :users, only: [:new, :create, :edit, :update, :show], shallow: true  do
 
