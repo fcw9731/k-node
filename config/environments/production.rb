@@ -89,13 +89,13 @@ Rails.application.configure do
   # }
 
   config.action_mailer.smtp_settings = {
-  :address => "email-smtp.us-east-1.amazonaws.com",
-  :port => 587,
-  :user_name => ENV["SMTP_USERNAME"], #Your SMTP user
-  :password => ENV["SMTP_PASSWORD"], #Your SMTP password
-  :authentication => :login,
-  :enable_starttls_auto => true
-}
+    :address => "email-smtp.us-east-1.amazonaws.com",
+    :port => 587,
+    :user_name => ENV["SMTP_USERNAME"], #Your SMTP user
+    :password => ENV["SMTP_PASSWORD"], #Your SMTP password
+    :authentication => :login,
+    :enable_starttls_auto => true
+  }
 
   config.action_mailer.delivery_method = :aws_sdk
   #

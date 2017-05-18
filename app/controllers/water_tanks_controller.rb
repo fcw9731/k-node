@@ -90,7 +90,7 @@ class WaterTanksController < ApplicationController
             "deviceClass": "standalone"
           }
           client = LosantRest::Client.new(auth_token: session[:losant_auth_token], url: "https://api.losant.com")
-          result = client.devices.post(applicationId: '590bc7a2c8f13000014788c5', device: my_device)        
+          result = client.devices.post(applicationId: ENV['LOSANT_APP_ID'], device: my_device)        
 
           puts result
         rescue => e

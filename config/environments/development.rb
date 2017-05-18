@@ -52,26 +52,18 @@ Rails.application.configure do
   # }
 
   config.action_mailer.smtp_settings = {
-  :address => "email-smtp.us-east-1.amazonaws.com",
-  :port => 587,
-  :user_name => ENV["SMTP_USERNAME"], #Your SMTP user
-  :password => ENV["SMTP_PASSWORD"], #Your SMTP password
-  :authentication => :login,
-  :enable_starttls_auto => true
-}
+    :address => "email-smtp.us-east-1.amazonaws.com",
+    :port => 587,
+    :user_name => ENV["SMTP_USERNAME"], #Your SMTP user
+    :password => ENV["SMTP_PASSWORD"], #Your SMTP password
+    :authentication => :login,
+    :enable_starttls_auto => true
+  }
 
   config.action_mailer.delivery_method = :aws_sdk
 
   config.action_mailer.default_url_options = { host: "localhost:3000" }
-
 end
 
-AWS_ACCESS_KEY_ID          = Rails.application.secrets.aws_access_key_id
-AWS_SECRET_ACCESS_KEY      = Rails.application.secrets.aws_secret_access_key
-
-# LOSANT CONFIG
-LOSANT_APP_ID             = '590bc7a2c8f13000014788c5'
-LOSANT_ACCESS_KEY         = '5604c1f7-fd1a-46b9-a3b5-ff2a455a368b'
-LOSANT_ACCESS_SECRET_KEY  = '3ef1f8fe40abed958e5f3455d797785b19134b8a9e0ff5463521ffdda935fb16'
-LOSANT_API_TOKEN          = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1OTFhOTk2YmU4N2YyYTAwMDFlNmY3OWYiLCJzdWJ0eXBlIjoiYXBpVG9rZW4iLCJzY29wZSI6WyJhbGwuQXBwbGljYXRpb24iXSwiaWF0IjoxNDk0OTE1NDM1LCJpc3MiOiJhcGkuZ2V0c3RydWN0dXJlLmlvIn0.Tjnqzpl2LS9V6-Z7-XxhOrkCmvLcOBCOlOIuFzfC0Gc'
-
+AWS_ACCESS_KEY_ID = Rails.application.secrets.aws_access_key_id
+AWS_SECRET_ACCESS_KEY = Rails.application.secrets.aws_secret_access_key
