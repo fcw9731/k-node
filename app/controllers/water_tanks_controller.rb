@@ -7,11 +7,11 @@ class WaterTanksController < ApplicationController
   end
 
   def create
-    @error = '' 
-    @farm_block = FarmBlock.find_by(id: params[:farm_block_id])
-    @water_tank = WaterTank.new(water_tank_params)
-    @water_tank.farm_block_id = @farm_block.id
+    @error = ''     
     if water_tank_params[:height].present? && water_tank_params[:capacity].present? && water_tank_params[:name].present? && water_tank_params[:device_EUI].present?
+      @farm_block = FarmBlock.find_by(id: params[:farm_block_id])
+      @water_tank = WaterTank.new(water_tank_params)
+      @water_tank.farm_block_id = @farm_block.id
       if @water_tank.save
         # begin
         #   Sensor.create_thing(@water_tank)

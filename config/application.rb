@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+    require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
@@ -25,5 +25,7 @@ module Knode
 
     # Load in custom classes from the 'lib' directory
     config.autoload_paths << Rails.root.join('lib')
+
+    config.serve_static_files = true
   end
 end

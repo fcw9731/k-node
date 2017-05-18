@@ -8,30 +8,45 @@ class InflowMetersController < ApplicationController
   end
 
   def create
-    @farm_block = FarmBlock.find_by(id: params[:farm_block_id])
-    @inflow_meter = InflowMeter.new(inflow_meter_params)
-    @inflow_meter.farm_block_id = @farm_block.id
+    @errors = ''
+    @inflow_meter = []
+    begin
+        if inflow_meter_params[:name].present? && inflow_meter_params[:calibration_unit].present? && inflow_meter_params[:device_EUI].present? && inflow_meter_params[:daily_consent].present?
+            @farm_block = FarmBlock.find_by(id: params[:farm_block_id])
+            @inflow_meter = InflowMeter.new(inflow_meter_params)
+            @inflow_meter.farm_block_id = @farm_block.id
 
-    # if @inflow_meter.save
-    #   begin
-    #     Sensor.create_thing(@inflow_meter)
-    #     Sensor.create_thing_database(@inflow_meter)
-    #     Sensor.create_thing_rule(@inflow_meter)
-    #   rescue Aws::DynamoDB::Errors::ResourceInUseException => error
-    #     @errors = error
-    #     return render :action => 'new'
-    #   rescue Aws::DynamoDB::Errors::ValidationException => error
-    #     @errors = error
-    #     return render :action => 'new'
-    #   rescue Aws::IoT::Errors::InvalidRequestException => error
-    #     @errors = error
-    #     return render :action => 'new'
-    #   end
-    #   return redirect_to inflow_meter_path(@inflow_meter)
-    # else
-    #   @errors = @inflow_meter.errors.messages
-    #   return render :action => 'new'
-    # end
+            if @inflow_meter.save
+                #   begin
+                #     Sensor.create_thing(@inflow_meter)
+                #     Sensor.create_thing_database(@inflow_meter)
+                #     Sensor.create_thing_rule(@inflow_meter)
+                #   rescue Aws::DynamoDB::Errors::ResourceInUseException => error
+                #     @errors = error
+                #     return render :action => 'new'
+                #   rescue Aws::DynamoDB::Errors::ValidationException => error
+                #     @errors = error
+                #     return render :action => 'new'
+                #   rescue Aws::IoT::Errors::InvalidRequestException => error
+                #     @errors = error
+                #     return render :action => 'new'
+                #   end
+                #   return redirect_to inflow_meter_path(@inflow_meter)
+                # else
+                #   @errors = @inflow_meter.errors.messages
+                  
+                return redirect_to farm_block_path(@farm_block)          
+            end                         
+        else
+            @errors = "Data not empty"
+            flash[:failure] = @errors
+            render :action => 'new'
+        end        
+    rescue => e
+        @errors = "Error!" + e.to_s
+        flash[:failure] = @errors
+        render :action => 'new'
+    end    
   end
 
   def edit
@@ -84,7 +99,7 @@ class InflowMetersController < ApplicationController
     #   end
 
       gon.inflow_meter[:data] = calculated_data
-    end
+    # end
 
     gon.inflow_meter[:sensor] = @inflow_meter
   end
