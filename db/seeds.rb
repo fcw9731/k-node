@@ -26,7 +26,7 @@ require 'faker'
 # create_users
 
 # Create test account
-  theo = User.create!(first_name: 'Theo',
+theo = User.create!(first_name: 'Theo',
                 last_name: 'Paul',
                 email: "theo@theinstillery.com",
                 password: "opensesame123",
