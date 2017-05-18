@@ -8,11 +8,10 @@ class WaterTanksController < ApplicationController
 
   def create
     @error = '' 
-    if params[:height].present? && params[:capacity].present? && params[:name].present? && params[:device_EUI].present?
-      @farm_block = FarmBlock.find_by(id: params[:farm_block_id])
-      @water_tank = WaterTank.new(water_tank_params)
-      @water_tank.farm_block_id = @farm_block.id
-
+    @farm_block = FarmBlock.find_by(id: params[:farm_block_id])
+    @water_tank = WaterTank.new(water_tank_params)
+    @water_tank.farm_block_id = @farm_block.id
+    if water_tank_params[:height].present? && water_tank_params[:capacity].present? && water_tank_params[:name].present? && water_tank_params[:device_EUI].present?
       if @water_tank.save
         # begin
         #   Sensor.create_thing(@water_tank)
@@ -107,8 +106,11 @@ class WaterTanksController < ApplicationController
       else
         @errors = @water_tank.errors.messages
         flash[:failure] = @errors
+        return render :action => 'new'
+      end
     else      
-      flash[:failure] = "Data not epmty"
+      @errors = "Data not epmty"
+      flash[:failure] = @errors
       return render :action => 'new'
     end
   end
@@ -182,9 +184,9 @@ class WaterTanksController < ApplicationController
 
   def destroy
     water_tank = WaterTank.find_by(id: params[:id])
-    $iot.delete_thing({
-      thing_name: water_tank.device_EUI
-      })
+    # $iot.delete_thing({
+    #   thing_name: water_tank.device_EUI
+    #   })
     water_tank.destroy
     redirect_to dashboard_path(current_user)
   end
