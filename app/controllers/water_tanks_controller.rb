@@ -123,18 +123,18 @@ class WaterTanksController < ApplicationController
 
     gon.water_tank = {}
 
-    unless Sensor.table_exists?(@water_tank.device_EUI)
-      begin
-        Sensor.create_thing_database(@water_tank)
-      rescue Aws::DynamoDB::Errors::ValidationException => error
-        puts error
-        message = "There is a problem with your sensor's device EUI!"
-        @error = {
-          error: error,
-          message: message
-        }
-      end
-    end
+    # unless Sensor.table_exists?(@water_tank.device_EUI)
+    #   begin
+    #     Sensor.create_thing_database(@water_tank)
+    #   rescue Aws::DynamoDB::Errors::ValidationException => error
+    #     puts error
+    #     message = "There is a problem with your sensor's device EUI!"
+    #     @error = {
+    #       error: error,
+    #       message: message
+    #     }
+    #   end
+    # end
 
     # begin
     #   resp = Sensor.scan_dynamodb(@water_tank)
