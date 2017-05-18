@@ -17,21 +17,21 @@ class SessionsController < ApplicationController
       #========================================================# 
       # Check authenticate user with Losant
       #========================================================# 
-      begin        
-        myCredentials = {
-          "email": params[:email], 
-          "password": params[:password]
-        }    
-        client = LosantRest::Client.new(auth_token: nil, url: "https://api.losant.com")
-        authStatus = client.auth.authenticate_user(credentials: myCredentials)
-        if authStatus
-          session[:losant_auth_token] = authStatus['token']
+      # begin        
+      #   myCredentials = {
+      #     "email": params[:email], 
+      #     "password": params[:password]
+      #   }    
+      #   client = LosantRest::Client.new(auth_token: nil, url: "https://api.losant.com")
+      #   authStatus = client.auth.authenticate_user(credentials: myCredentials)
+      #   if authStatus
+      #     session[:losant_auth_token] = authStatus['token']
           redirect_to root_path        
-        end
-      rescue => e
-        flash[:failure] = "User Unauthorized with Losant"
-        redirect_to login_path
-      end
+      #   end
+      # rescue => e
+      #   flash[:failure] = "User Unauthorized with Losant"
+      #   redirect_to login_path
+      # end
       #========================================================# 
       # End check authenticate user with Losant
       #========================================================#       
