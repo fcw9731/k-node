@@ -1,6 +1,6 @@
 class InflowMetersController < ApplicationController
 
-  require "Sensor"
+  # require "Sensor"
 
   def new
     @farm_block = FarmBlock.find_by(id: params[:farm_block_id])

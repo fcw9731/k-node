@@ -1,6 +1,6 @@
 class AlertsController < ApplicationController
 
-  include AlertValue
+  # include AlertValue
 
   # before_filter :load_alertable
 
