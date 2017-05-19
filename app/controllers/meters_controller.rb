@@ -1,4 +1,5 @@
 class MetersController < ApplicationController
+  require "losant_rest"
 
   def index
 
@@ -28,7 +29,7 @@ class MetersController < ApplicationController
 
   def show
     @meter = Meter.find_by(id: params[:id])
-    @alerts = @meter.alerts
+    @alerts = @meter.alerts  
   end
 
   def update

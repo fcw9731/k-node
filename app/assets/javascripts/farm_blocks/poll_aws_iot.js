@@ -1,4 +1,5 @@
 function poll (params) {
+  
   var requestOptions = {
       url: '/data',
       method: 'POST',
@@ -11,6 +12,8 @@ function poll (params) {
   xmlResponse.done(function(response){
 
     devices = response.devices
+
+    // console.log("==devices===", devices);
 
     for (var i in devices.water_tanks){
       var waterTank = devices.water_tanks[i];

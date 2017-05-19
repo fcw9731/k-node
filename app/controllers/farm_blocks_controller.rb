@@ -1,6 +1,7 @@
 class FarmBlocksController < ApplicationController
 
   require 'base64'
+  require "losant_rest"
 
   def index
     @user = User.find_by(id: params[:user_id])
@@ -91,21 +92,30 @@ class FarmBlocksController < ApplicationController
 
     if @farm_block.inflow_meters
       gon.inflow_meters = []
-      @farm_block.inflow_meters.each do |inflmt|
-        output = {}
-        output[:name] = inflmt.name
-        output[:capacity] = inflmt.calibration_unit
+      @farm_block.inflow_meters.each do |inflmt|        
+        # Get state device info = Inflow Meter        
+        # begin
+          # client = LosantRest::Client.new(auth_token: session[:losant_auth_token], url: "https://api.losant.com")
+          # @result = client.device.get( applicationId: ENV['LOSANT_APP_ID'], deviceId: inflmt.device_EUI)
 
-        if inflmt.location
-          output[:longitude] = inflmt.location.longitude
-          output[:latitude] = inflmt.location.latitude
-        end
+          output = {}
+          output[:name] = inflmt.name
+          output[:capacity] = '2000' #inflmt.calibration_unit
 
-        if inflmt.alerts
-          output[:alerts] = inflmt.alerts
-        end
-        gon.inflow_meters.push(output)
-      end
+          if inflmt.location
+            output[:longitude] = inflmt.location.longitude
+            output[:latitude] = inflmt.location.latitude
+          end
+
+          if inflmt.alerts
+            output[:alerts] = inflmt.alerts
+          end
+          gon.inflow_meters.push(output)
+
+        # rescue Exception => e
+        #   @errors = e.to_s
+        # end              
+      end      
     end
 
   end

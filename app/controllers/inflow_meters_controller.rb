@@ -1,6 +1,7 @@
 class InflowMetersController < ApplicationController
 
   # require "Sensor"
+  require "losant_rest"
 
   def new
     @farm_block = FarmBlock.find_by(id: params[:farm_block_id])
@@ -57,6 +58,19 @@ class InflowMetersController < ApplicationController
     @inflow_meter = InflowMeter.find_by(id: params[:id])
     @alerts = @inflow_meter.alerts
     gon.inflow_meter = {}
+
+    #================================================#
+    # Get state device info = Meter
+    #================================================#
+    begin      
+      client = LosantRest::Client.new(auth_token: session[:losant_auth_token], url: "https://api.losant.com")
+      @result = client.device.get_composite_state( applicationId: ENV['LOSANT_APP_ID'], deviceId: '590bc819d8f11a0001e6aad5')
+    rescue Exception => e
+      @errors = e.to_s
+    end    
+    #================================================#
+    # End get state device info = Meter
+    #================================================#
 
     # unless Sensor.table_exists?(@inflow_meter.device_EUI)
     #   begin

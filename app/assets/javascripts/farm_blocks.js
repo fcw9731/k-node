@@ -15,17 +15,17 @@
 
 $(document).ready(function(){
 
-drawWaterTankGauges(gon.water_tanks);
-drawInflowMeterGauges(gon.inflow_meters);
+	drawWaterTankGauges(gon.water_tanks);
+	drawInflowMeterGauges(gon.inflow_meters);
 
-if (gon.farms) {
-  for (var i = 0, farmCount = gon.farms.length; i < farmCount; i++)
-    drawMap(gon.farms[i]);
-}
+	if (gon.farms) {
+	  for (var i = 0, farmCount = gon.farms.length; i < farmCount; i++)
+	    drawMap(gon.farms[i]);
+	}
 
-var fbID = window.location.pathname[window.location.pathname.length - 1];
-var deviceParams = {"id": fbID};
+	var fbID = window.location.pathname[window.location.pathname.length - 1];	
+	var deviceParams = {"id": fbID};
 
-poll(deviceParams);
+	poll(deviceParams);
 
 });
