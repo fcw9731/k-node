@@ -7,9 +7,9 @@ module Sensor
 
     return if self.thing_exists?(name)
 
-    $iot.create_thing({
-      thing_name: name
-    })
+    # $iot.create_thing({
+    #   thing_name: name
+    # })
   end
 
   def self.create_thing_database(sensor)
@@ -40,7 +40,7 @@ module Sensor
       }
     }
 
-    $dynamodb.create_table(params)
+    # $dynamodb.create_table(params)
   end
 
   def self.create_thing_rule(sensor)
@@ -73,60 +73,60 @@ module Sensor
       },
     }
 
-    $iot.create_topic_rule(params)
+    # $iot.create_topic_rule(params)
   end
 
   def self.delete_thing(sensor)
 
     name = sensor.device_EUI
 
-    if self.thing_exists?(name)
-      $iot.delete_thing({
-        thing_name: name
-      })
-    end
+    # if self.thing_exists?(name)
+    #   $iot.delete_thing({
+    #     thing_name: name
+    #   })
+    # end
   end
 
   def self.delete_thing_database(sensor)
 
     table_name = sensor.device_EUI
 
-    if self.table_exists?(table_name)
-      $dynamodb.delete_table({
-        table_name: table_name
-      })
-    end
+    # if self.table_exists?(table_name)
+    #   $dynamodb.delete_table({
+    #     table_name: table_name
+    #   })
+    # end
   end
 
   def self.delete_thing_rule(sensor)
 
     thing_rule = "#{sensor.device_EUI}_rule"
 
-    if self.thing_rule_exists?(thing_rule)
-      $iot.delete_topic_rule({
-        rule_name: thing_rule
-      })
-    end
+    # if self.thing_rule_exists?(thing_rule)
+    #   $iot.delete_topic_rule({
+    #     rule_name: thing_rule
+    #   })
+    # end
   end
 
   def self.thing_exists?(thing_name)
-    $iot.list_things.things.each do |thing|
-      return true if thing.thing_name == thing_name
-    end
+    # $iot.list_things.things.each do |thing|
+    #   return true if thing.thing_name == thing_name
+    # end
     false
   end
 
   def self.table_exists?(table_name)
-    $dynamodb.list_tables.table_names.each do |table|
-      return true if table == table_name
-    end
+    # $dynamodb.list_tables.table_names.each do |table|
+    #   return true if table == table_name
+    # end
     false
   end
 
   def self.thing_rule_exists?(thing_rule)
-    $iot.list_topic_rules.rules.each do |rule|
-      return true if rule.rule_name == thing_rule
-    end
+    # $iot.list_topic_rules.rules.each do |rule|
+    #   return true if rule.rule_name == thing_rule
+    # end
     false
   end
 
@@ -138,7 +138,7 @@ module Sensor
       table_name: table_name
     }
 
-    $dynamodb.scan(query_params)
+    # $dynamodb.scan(query_params)
   end
 
   class Error < StandardError

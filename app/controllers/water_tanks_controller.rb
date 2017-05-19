@@ -125,48 +125,48 @@ class WaterTanksController < ApplicationController
 
     gon.water_tank = {}
 
-    unless Sensor.table_exists?(@water_tank.device_EUI)
-      begin
-        Sensor.create_thing_database(@water_tank)
-      rescue Aws::DynamoDB::Errors::ValidationException => error
-        puts error
-        message = "There is a problem with your sensor's device EUI!"
-        @error = {
-          error: error,
-          message: message
-        }
-      end
-    end
+    # unless Sensor.table_exists?(@water_tank.device_EUI)
+    #   begin
+    #     Sensor.create_thing_database(@water_tank)
+    #   rescue Aws::DynamoDB::Errors::ValidationException => error
+    #     puts error
+    #     message = "There is a problem with your sensor's device EUI!"
+    #     @error = {
+    #       error: error,
+    #       message: message
+    #     }
+    #   end
+    # end
 
-    begin
-      resp = Sensor.scan_dynamodb(@water_tank)
-    rescue Aws::DynamoDB::Errors::ResourceNotFoundException => error
-      puts error
-      message = "Sensor Database Initialising!"
-      @error = {
-        message: message,
-        error:   error
-      }
-      gon.water_tank[:data] = []
-    rescue Aws::DynamoDB::Errors::ValidationException => error
-      puts error
-      message = "There is a problem with your sensor's device EUI!"
-      @error = {
-        error: error,
-        message: message
-      }
-    else
-      all_items = resp.items
+    # begin
+    #   resp = Sensor.scan_dynamodb(@water_tank)
+    # rescue Aws::DynamoDB::Errors::ResourceNotFoundException => error
+    #   puts error
+    #   message = "Sensor Database Initialising!"
+    #   @error = {
+    #     message: message,
+    #     error:   error
+    #   }
+    #   gon.water_tank[:data] = []
+    # rescue Aws::DynamoDB::Errors::ValidationException => error
+    #   puts error
+    #   message = "There is a problem with your sensor's device EUI!"
+    #   @error = {
+    #     error: error,
+    #     message: message
+    #   }
+    # else
+    #   all_items = resp.items
 
-      calculated_data = all_items.map do |entry|
-        flow_data = WaterTankData.new(@water_tank, entry["payload"]["data"], entry["timestamp"])
-        flow_data.convert_base64_to_decimal
-        flow_data.calculate_volume(flow_data.calculated.to_i, @water_tank)
-        flow_data
-      end
+    #   calculated_data = all_items.map do |entry|
+    #     flow_data = WaterTankData.new(@water_tank, entry["payload"]["data"], entry["timestamp"])
+    #     flow_data.convert_base64_to_decimal
+    #     flow_data.calculate_volume(flow_data.calculated.to_i, @water_tank)
+    #     flow_data
+    #   end
 
-      gon.water_tank[:data] = calculated_data
-    end
+    #   gon.water_tank[:data] = calculated_data
+    # end
 
     gon.water_tank[:sensor] = @water_tank
 

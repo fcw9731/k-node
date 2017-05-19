@@ -13,9 +13,9 @@ class SensorData
   end
 
   def SensorData.get_shadow(device)
-    $iot_data_plane.get_thing_shadow({ # returns an object of the StringIO class
-      thing_name: device[:device].device_EUI
-    })
+    # $iot_data_plane.get_thing_shadow({ # returns an object of the StringIO class
+    #   thing_name: device[:device].device_EUI
+    # })
   end
 
   def SensorData.parse_shadow(raw_data)
@@ -39,11 +39,11 @@ class SensorData
 
   def SensorData.thing_exists?(thing_name)
 
-    aws_thing_test = $iot.describe_thing({
-      thing_name: thing_name
-      }) rescue false
+      # aws_thing_test = $iot.describe_thing({
+      # thing_name: thing_name
+      # }) rescue false
 
-      return true if aws_thing_test
+      # return true if aws_thing_test
 
       false
   end

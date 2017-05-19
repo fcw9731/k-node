@@ -52,7 +52,7 @@ gem 'gmaps4rails'
 
 
 # AWS integration
-gem 'aws-sdk-rails'
+# gem 'aws-sdk-rails'
 # gem 'aws-sdk'
 
 # Frontend framework
