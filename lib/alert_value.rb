@@ -2,25 +2,25 @@ module AlertValue
 
   def create_alert_value(device_EUI, type, value)
 
-    table_name = 'alert_values'
+    # table_name = 'alert_values'
 
-    item_params = {
-      "devEUI": device_EUI,
-      type: type,
-      value: value,
-    }
+    # item_params = {
+    #   "devEUI": device_EUI,
+    #   type: type,
+    #   value: value,
+    # }
 
-    params = {
-      table_name: table_name,
-      item: item_params,
-    }
+    # params = {
+    #   table_name: table_name,
+    #   item: item_params,
+    # }
 
     # $dynamodb.put_item(params)
 
   end
 
   def attach_lambda_to_thing_rule(thing_name, type )
-    thing_rule = thing_name + "_rule"
+    # thing_rule = thing_name + "_rule"
 
     # former_rule = $iot.get_topic_rule({
     #   rule_name: thing_rule
@@ -56,7 +56,7 @@ module AlertValue
 
   def remove_lambda_from_thing_rule(thing_name)
 
-    thing_rule = thing_name + "_rule"
+    # thing_rule = thing_name + "_rule"
 
     # former_rule = $iot.get_topic_rule({
     #   rule_name: thing_rule
@@ -76,9 +76,9 @@ module AlertValue
     #     }
     #   }
 
-      begin
+      # begin
         # $iot.replace_topic_rule(params)
-      end
+      # end
 
   end
 
@@ -94,18 +94,18 @@ module AlertValue
 
   def confirm_alert_seen(data, device_EUI)
 
-    params = {
-      table_name: device_EUI + "_alerts",
-      key: {
-        "data": data.to_s
-      },
-      attribute_updates: {
-        "seen" => {
-          value: true,
-          action: "PUT"
-        }
-      }
-    }
+    # params = {
+    #   table_name: device_EUI + "_alerts",
+    #   key: {
+    #     "data": data.to_s
+    #   },
+    #   attribute_updates: {
+    #     "seen" => {
+    #       value: true,
+    #       action: "PUT"
+    #     }
+    #   }
+    # }
 
     # $dynamodb.update_item(params)
 

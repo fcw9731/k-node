@@ -2,14 +2,14 @@
 class SensorData
 
   def SensorData.is_online?(ts)
-    current_time = Time.now.strftime("%s").to_i # get current time in Unix format
-    seconds_difference = current_time - ts.to_i
+    # current_time = Time.now.strftime("%s").to_i # get current time in Unix format
+    # seconds_difference = current_time - ts.to_i
 
-    if seconds_difference > 3600
-      return false
-    else
-      return true
-    end
+    # if seconds_difference > 3600
+    #   return false
+    # else
+    #   return true
+    # end
   end
 
   def SensorData.get_shadow(device)
@@ -19,21 +19,21 @@ class SensorData
   end
 
   def SensorData.parse_shadow(raw_data)
-    return JSON.parse(raw_data.payload.string)
+    # return JSON.parse(raw_data.payload.string)
   end
 
   def SensorData.convert_timestamp_to_datetime(ts)
 
-    ts_string = ts.to_s[0,10] #we don't need the last 3 digits of information
+    # ts_string = ts.to_s[0,10] #we don't need the last 3 digits of information
 
-    datetime = DateTime.strptime(ts_string, '%s')
+    # datetime = DateTime.strptime(ts_string, '%s')
 
-    time = datetime.to_time.strftime("%H:%M:%S %P")
-    date = datetime.to_date
+    # time = datetime.to_time.strftime("%H:%M:%S %P")
+    # date = datetime.to_date
 
-    new_datetime = "#{date} #{time}"
+    # new_datetime = "#{date} #{time}"
 
-    return new_datetime
+    # return new_datetime
 
   end
 
@@ -45,14 +45,14 @@ class SensorData
 
       # return true if aws_thing_test
 
-      false
+      # false
   end
 
   def self.has_state?(data_payload)
 
-    return true if data_payload["state"]["reported"]
+    # return true if data_payload["state"]["reported"]
 
-    false
+    # false
   end
 
 end
