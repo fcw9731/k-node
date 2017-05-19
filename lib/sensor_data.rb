@@ -24,16 +24,16 @@ class SensorData
 
   def SensorData.convert_timestamp_to_datetime(ts)
 
-    # ts_string = ts.to_s[0,10] #we don't need the last 3 digits of information
+    ts_string = ts.to_s[0,10] #we don't need the last 3 digits of information  
 
-    # datetime = DateTime.strptime(ts_string, '%s')
+    datetime = DateTime.strptime(ts_string, '%s')
 
-    # time = datetime.to_time.strftime("%H:%M:%S %P")
-    # date = datetime.to_date
+    time = datetime.to_time.strftime("%H:%M:%S %P")
+    date = datetime.to_date
 
-    # new_datetime = "#{date} #{time}"
+    new_datetime = "#{date} #{time}"
 
-    # return new_datetime
+    return new_datetime
 
   end
 

@@ -26,44 +26,45 @@ require 'faker'
 # create_users
 
 # Create test account
-theo = User.create!(first_name: 'Theo',
-                last_name: 'Paul',
-                email: "theo@theinstillery.com",
-                password: "opensesame123",
-                phone: '0211149935'
-                )
+# theo = User.create!(first_name: 'Theo',
+#                 last_name: 'Paul',
+#                 email: "theo@theinstillery.com",
+#                 password: "opensesame123",
+#                 phone: '0211149935'
+#                 )
 
-mike = User.create!(first_name: "Mike",
-              last_name: "Jenkins",
-              email: "mike@theinstillery.com",
-              password: "mikeJenkins123",
-              phone: "0212265128"
-              )
+# mike = User.create!(first_name: "Mike",
+#               last_name: "Jenkins",
+#               email: "mike@theinstillery.com",
+#               password: "mikeJenkins123",
+#               phone: "0212265128"
+#               )
 
-richie = User.create!(first_name: "Richie",
-              last_name: "Wildman",
-              email: "rjdwildman@gmail.com",
-              password: "w1lDman",
-              phone: "0211587239")
+# richie = User.create!(first_name: "Richie",
+#               last_name: "Wildman",
+#               email: "rjdwildman@gmail.com",
+#               password: "w1lDman",
+#               phone: "0211587239")
 
-scott = User.create!(first_name: "Scott",
-              last_name: "Townshend",
-              email: "hello@eltorito.co.nz",
-              password: "Sc0tt123",
-              phone: "0210566770")
+# scott = User.create!(first_name: "Scott",
+#               last_name: "Townshend",
+#               email: "hello@eltorito.co.nz",
+#               password: "Sc0tt123",
+#               phone: "0210566770")
 
-marcus = User.create!(first_name: "Marcus",
-              last_name: "Graham",
-              email: "mgraham1234@gmail.com",
-              password: "Marcus123",
-              phone:"123456789")
+# marcus = User.create!(first_name: "Marcus",
+#               last_name: "Graham",
+#               email: "mgraham1234@gmail.com",
+#               password: "Marcus123",
+#               phone:"123456789")
 
-jack = User.create!(first_name: "Jack",
-              last_name: "Downs",
-              email: "jack@theinstillery.com",
-              password: "JackDowns123",
-              phone: "02102679303")
+# jack = User.create!(first_name: "Jack",
+#               last_name: "Downs",
+#               email: "jack@theinstillery.com",
+#               password: "JackDowns123",
+#               phone: "02102679303")
 
+# Create user has permision access in Losant
 water = User.create!(first_name: "Water",
               last_name: "Metric",
               email: "watermetricsolutions@gmail.com",
@@ -97,127 +98,81 @@ end
 
 create_farm_block
 
-FarmBlock.create!(name: "Longridge Farm",
-                  user_id: 9)
+# FarmBlock.create!(name: "Longridge Farm",
+#                   user_id: 1)
 
-Location.create!(address: "",longitude:174.777721, latitude:-36.853535, locationable_id: 6, locationable_type:"FarmBlock")
-
-
-# Water Tank seed
-theo.farm_blocks.first.inflow_meters.create!(
-# height: 2.5,
-# capacity: 25000,
-name: "Theo's Inflow Meter",
-device_EUI: "00000000C1D10B7F",
-calibration_unit: 10,
-daily_consent: 100)
-
-mike.farm_blocks.first.inflow_meters.create!(
-# height: 2.5,
-# capacity: 25000,
-name: "Mike's Inflow Meter",
-device_EUI: "00000000C1D10B7F",
-calibration_unit: 10,
-daily_consent: 100)
-
-richie.farm_blocks.first.inflow_meters.create!(
-# height: 2.5,
-# capacity: 25000,
-name: "Richie's Inflow Meter",
-device_EUI: "00000000C1D10B7F",
-calibration_unit: 10,
-daily_consent: 100)
-
-scott.farm_blocks.first.inflow_meters.create!(
-# height: 2.5,
-# capacity: 25000,
-name: "Scott's Inflow Meter",
-device_EUI: "00000000C1D10B7F",
-calibration_unit: 10,
-daily_consent: 100)
-
-marcus.farm_blocks.first.inflow_meters.create!(
-# height: 2.5,
-# capacity: 25000,
-name: "Marcus' Inflow Meter",
-device_EUI: "00000000C1D10B7F",
-calibration_unit: 10,
-daily_consent: 100)
+# Location.create!(address: "",longitude:174.777721, latitude:-36.853535, locationable_id: 6, locationable_type:"FarmBlock")
 
 
-# Water Tank seed
-
-theo.farm_blocks.first.inflow_meters.create!(
-# height: 2.5,
-# capacity: 25000,
-name: "Theo's Inflow Meter",
-device_EUI: "0000000019E29E5F",
-calibration_unit: 10,
-daily_consent: 100)
-
-mike.farm_blocks.first.inflow_meters.create!(
-# height: 2.5,
-# capacity: 25000,
-name: "Mike's Inflow Meter",
-device_EUI: "0000000019E29E5F",
-calibration_unit: 10,
-daily_consent: 100)
-
-richie.farm_blocks.first.inflow_meters.create!(
-# height: 2.5,
-# capacity: 25000,
-name: "Richie's Inflow Meter",
-device_EUI: "0000000019E29E5F",
-calibration_unit: 10,
-daily_consent: 100)
-
-scott.farm_blocks.first.inflow_meters.create!(
-# height: 2.5,
-# capacity: 25000,
-name: "Scott's Inflow Meter",
-device_EUI: "0000000019E29E5F",
-calibration_unit: 10,
-daily_consent: 100)
-
-marcus.farm_blocks.first.inflow_meters.create!(
-# height: 2.5,
-# capacity: 25000,
-name: "Marcus' Inflow Meter",
-device_EUI: "0000000019E29E5F",
-calibration_unit: 10,
-daily_consent: 100)
-
-## Water Tanks ##
-
-theo.farm_blocks.first.water_tanks.create!(
-height: 2.5,
-capacity: 25000,
-device_EUI: "00000000911DAA5C"
+# Water Meters seed
+water.farm_blocks.first.inflow_meters.create!(
+  # height: 2.5,
+  # capacity: 25000,
+  name: "1C8E99-1",
+  device_EUI: "590bc819d8f11a0001e6aad5",
+  calibration_unit: 10,
+  daily_consent: 100
 )
 
-mike.farm_blocks.first.water_tanks.create!(
-height: 2.5,
-capacity: 25000,
-device_EUI: "00000000911DAA5C"
+water.farm_blocks.first.inflow_meters.create!(
+  # height: 2.5,
+  # capacity: 25000,
+  name: "1C8E99-2",
+  device_EUI: "590fe3dec2e38c0001dc78de",
+  calibration_unit: 10,
+  daily_consent: 100
 )
 
-richie.farm_blocks.first.water_tanks.create!(
-height: 2.5,
-capacity: 25000,
-device_EUI: "00000000911DAA5C"
+water.farm_blocks.first.inflow_meters.create!(
+  # height: 2.5,
+  # capacity: 25000,
+  name: "4D517B-1",
+  device_EUI: "59117f24c2e38c0001dc7949",
+  calibration_unit: 10,
+  daily_consent: 100
 )
 
-scott.farm_blocks.first.water_tanks.create!(
-height: 2.5,
-capacity: 25000,
-device_EUI: "00000000911DAA5C"
+water.farm_blocks.first.inflow_meters.create!(
+  # height: 2.5,
+  # capacity: 25000,
+  name: "4D5185-1",
+  device_EUI: "59117c78c2e38c0001dc7948",
+  calibration_unit: 10,
+  daily_consent: 100
 )
 
-marcus.farm_blocks.first.water_tanks.create!(
-height: 2.5,
-capacity: 25000,
-device_EUI: "00000000911DAA5C"
-)
+
+# mike.farm_blocks.first.inflow_meters.create!(
+# # height: 2.5,
+# # capacity: 25000,
+# name: "Mike's Inflow Meter",
+# device_EUI: "00000000C1D10B7F",
+# calibration_unit: 10,
+# daily_consent: 100)
+
+# richie.farm_blocks.first.inflow_meters.create!(
+# # height: 2.5,
+# # capacity: 25000,
+# name: "Richie's Inflow Meter",
+# device_EUI: "00000000C1D10B7F",
+# calibration_unit: 10,
+# daily_consent: 100)
+
+# scott.farm_blocks.first.inflow_meters.create!(
+# # height: 2.5,
+# # capacity: 25000,
+# name: "Scott's Inflow Meter",
+# device_EUI: "00000000C1D10B7F",
+# calibration_unit: 10,
+# daily_consent: 100)
+
+# marcus.farm_blocks.first.inflow_meters.create!(
+# # height: 2.5,
+# # capacity: 25000,
+# name: "Marcus' Inflow Meter",
+# device_EUI: "00000000C1D10B7F",
+# calibration_unit: 10,
+# daily_consent: 100)
 
 
 # Location seed
@@ -256,6 +211,6 @@ create_locations
 
 # Meter Seed
 
-Meter.create!(name: "Theo's Inflow Meter",
-              type: "Inflow",
-              farm_block_id: 6)
+# Meter.create!(name: "Meter 1C8E99-1",
+#               type: "Inflow",
+#               farm_block_id: 1)

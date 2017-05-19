@@ -138,104 +138,107 @@ class FarmBlocksController < ApplicationController
 
   #retrieves data for all the devices belonging to a farm_block
   def get_iot_shadows
+    fb_devices = {
+      water_tanks: [],
+      inflow_meters: []
+    }
 
-    fb_devices = {water_tanks: [],
-      inflow_meters: []}
+    fb = FarmBlock.find(params[:id])
+    client = LosantRest::Client.new(auth_token: session[:losant_auth_token], url: "https://api.losant.com")
 
-      fb = FarmBlock.find(params[:id])
+    #================ Water tank ================#
+    # fb.water_tanks.each do |wt|
+    #   fb_devices[:water_tanks].push({device: wt, type: "water-tank", deviceAlerts: wt.alerts})
+    # end
+    
+    # fb_devices[:water_tanks].each do |device_object|
+    #   if SensorData.thing_exists?(device_object[:device].device_EUI)
+    #     resp        = SensorData.get_shadow(device_object)
+    #     parsed_data = SensorData.parse_shadow(resp)
+    #     device_object[:shadow] = parsed_data
+    #   end
+    #   device_object[:sensor_health] = {
+    #     message: "Offline",
+    #     online_status: false
+    #   }
+    # end
 
-      fb.water_tanks.each do |wt|
-        fb_devices[:water_tanks].push({device: wt, type: "water-tank", deviceAlerts: wt.alerts})
-      end
+    # fb_devices[:water_tanks].each do |device_object|
 
-      fb.inflow_meters.each do |meter|
-        fb_devices[:inflow_meters].push({device: meter, type:"inflow-meter", deviceAlerts: meter.alerts})
-      end
+    #   if SensorData.thing_exists?(device_object[:device].device_EUI)
+    #     if SensorData.has_state?(device_object[:shadow])
+    #       shadow        = device_object[:shadow]["state"]["reported"]
+    #       aws_timestamp = shadow["ts"].to_s rescue device_object
+    #       device_object[:latest_reading] = {timestamp: SensorData.convert_timestamp_to_datetime(aws_timestamp)}
 
-      fb_devices[:water_tanks].each do |device_object|
+    #       if SensorData.is_online?(aws_timestamp)
+    #         device_object[:sensor_health][:message] = "Online"
+    #         device_object[:sensor_health][:online_status] = true
+    #       end
 
-        if SensorData.thing_exists?(device_object[:device].device_EUI)
-          resp        = SensorData.get_shadow(device_object)
-          parsed_data = SensorData.parse_shadow(resp)
-          device_object[:shadow] = parsed_data
-        end
+    #       if is_water_tank?(device_object)
 
-        device_object[:sensor_health] = {
-          message: "Offline",
-          online_status: false
-        }
+    #         raw_data = shadow["data"]
+    #         device = device_object[:device]
+    #         timestamp = shadow["ts"]
+    #         data = WaterTankData.new(device, raw_data, timestamp)
+    #         decimal_number = convert_base64_to_decimal(raw_data)
+    #         volume = data.calculate_volume(decimal_number, device_object[:device])
+    #         device_object[:latest_reading][:data] = volume
+    #       end
+    #     end
+    #   end
+    # end    
 
-      end
-
-      fb_devices[:inflow_meters].each do |device_object|
-
-        if SensorData.thing_exists?(device_object[:device].device_EUI)
-          resp        = SensorData.get_shadow(device_object)
-          parsed_data = SensorData.parse_shadow(resp)
-          device_object[:shadow] = parsed_data
-        end
-
-        device_object[:sensor_health] = {
-          message: "Offline",
-          online_status: false
-        }
-
-      end
-
-      fb_devices[:water_tanks].each do |device_object|
-
-        if SensorData.thing_exists?(device_object[:device].device_EUI)
-          if SensorData.has_state?(device_object[:shadow])
-            shadow        = device_object[:shadow]["state"]["reported"]
-            aws_timestamp = shadow["ts"].to_s rescue device_object
-            device_object[:latest_reading] = {timestamp: SensorData.convert_timestamp_to_datetime(aws_timestamp)}
-
-            if SensorData.is_online?(aws_timestamp)
-              device_object[:sensor_health][:message] = "Online"
-              device_object[:sensor_health][:online_status] = true
-            end
-
-            if is_water_tank?(device_object)
-
-              raw_data = shadow["data"]
-              device = device_object[:device]
-              timestamp = shadow["ts"]
-              data = WaterTankData.new(device, raw_data, timestamp)
-              decimal_number = convert_base64_to_decimal(raw_data)
-              volume = data.calculate_volume(decimal_number, device_object[:device])
-              device_object[:latest_reading][:data] = volume
-            end
-          end
-        end
-      end
-
-      # Inflow meters
-
-      fb_devices[:inflow_meters].each do |device_object|
-
-        if SensorData.thing_exists?(device_object[:device].device_EUI)
-          if SensorData.has_state?(device_object[:shadow])
-
-            shadow        = device_object[:shadow]["state"]["reported"]
-            aws_timestamp = shadow["ts"].to_s
-            device_object[:latest_reading] = { timestamp: SensorData.convert_timestamp_to_datetime(aws_timestamp) }
-
-            if SensorData.is_online?(aws_timestamp)
-              device_object[:sensor_health][:message] = "Online"
-              device_object[:sensor_health][:online_status] = true
-            end
-
-            flow_data = FlowMeterData.new(device_object[:device], shadow["data"], shadow["ts"])
-            flow_data.convert_base64_to_decimal
-            flow_data.calculate_flow_data
-            device_object[:latest_reading][:data] = flow_data.calculated.to_i
-          end
-
-        end
-      end
-
-      render :json => {devices: fb_devices}
+    #================ Inflow meters ================#
+    fb.inflow_meters.each do |meter|
+      fb_devices[:inflow_meters].push({device: meter, type:"inflow-meter", deviceAlerts: meter.alerts})
     end
+
+    fb_devices[:inflow_meters].each do |device_object|
+      # if SensorData.thing_exists?(device_object[:device].device_EUI)
+      #   resp        = SensorData.get_shadow(device_object)
+      #   parsed_data = SensorData.parse_shadow(resp)
+      #   device_object[:shadow] = parsed_data
+      # end
+
+      device_EUI = device_object[:device].device_EUI
+      losant_device_info = client.device.get(applicationId: ENV['LOSANT_APP_ID'], deviceId: device_EUI)
+      losant_device_state = client.device.get_state(applicationId: ENV['LOSANT_APP_ID'], deviceId: device_EUI)
+      if losant_device_info['lastUpdated'] != ''
+        device_object[:sensor_health] = {message: "Online", online_status: true}
+      else
+        device_object[:sensor_health] = {message: "Offline", online_status: false}
+      end              
+
+      device_object[:latest_reading] = { timestamp: losant_device_info['lastUpdated'] }
+      device_object[:avgSnr] = losant_device_state[0]['data']['avgSnr']
+    end  
+
+    # fb_devices[:inflow_meters].each do |device_object|
+    #   if SensorData.thing_exists?(device_object[:device].device_EUI)
+    #     if SensorData.has_state?(device_object[:shadow])
+
+    #       shadow        = device_object[:shadow]["state"]["reported"]
+    #       aws_timestamp = shadow["ts"].to_s
+    #       device_object[:latest_reading] = { timestamp: SensorData.convert_timestamp_to_datetime(aws_timestamp) }
+
+    #       if SensorData.is_online?(aws_timestamp)
+    #         device_object[:sensor_health][:message] = "Online"
+    #         device_object[:sensor_health][:online_status] = true
+    #       end
+
+    #       flow_data = FlowMeterData.new(device_object[:device], shadow["data"], shadow["ts"])
+    #       flow_data.convert_base64_to_decimal
+    #       flow_data.calculate_flow_data
+    #       device_object[:latest_reading][:data] = flow_data.calculated.to_i
+    #     end
+    #   end
+    # end
+
+    # Render view
+    render :json => {devices: fb_devices}
+  end
 
     private
 

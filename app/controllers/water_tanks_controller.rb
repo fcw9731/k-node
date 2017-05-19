@@ -31,73 +31,71 @@ class WaterTanksController < ApplicationController
         #========================================================# 
         # Save as new Dashboard in Losant
         #========================================================# 
-        begin
-          my_device = {
-            "name": water_tank_params['name'],          
-            "description": "New device" + water_tank_params['name'],
-            "tags": [
-              {              
-                "key": "sigfox_id",
-                "value": "1C8E99"
-              },
-              {
-                "key": "sensor_input",
-                "value": "1"
-              }
-            ],
-            "attributes": [
-              {
-                "name": "location",
-                "dataType": "gps"
-              },
-              {   
-                "name": "snr",
-                "dataType": "number"  
-              },
-              {
-                "name": "station",
-                "dataType": "string"
-              },
-              {
-                "name": "data",
-                "dataType": "string"
-              },  
-              {
-                "name": "avgSnr",
-                "dataType": "number"
-              },
-              {
-                "name": "rssi",
-                "dataType": "number"
-              }, 
-              {
-                "name": "seqNumber",
-                "dataType": "number"
-              },  
-              {
-                "name": "pulse",
-                "dataType": "number"
-              }, 
-              {
-                "name": "battery",
-                "dataType": "number"
-              },  
-              {            
-                "name": "totalflow",
-                "dataType": "number"             
-              }
-            ],
-            "deviceClass": "standalone"
-          }
-          client = LosantRest::Client.new(auth_token: session[:losant_auth_token], url: "https://api.losant.com")
-          result = client.devices.post(applicationId: ENV['LOSANT_APP_ID'], device: my_device)        
-
-          puts result
-        rescue => e
-          @error = e.to_s              
-          flash[:failure] = @error
-          return render :action => 'new'
-        end
+        # begin
+        #   my_device = {
+        #     "name": water_tank_params['name'],          
+        #     "description": "New device" + water_tank_params['name'],
+        #     "tags": [
+        #       {              
+        #         "key": "sigfox_id",
+        #         "value": "1C8E99"
+        #       },
+        #       {
+        #         "key": "sensor_input",
+        #         "value": "1"
+        #       }
+        #     ],
+        #     "attributes": [
+        #       {
+        #         "name": "location",
+        #         "dataType": "gps"
+        #       },
+        #       {   
+        #         "name": "snr",
+        #         "dataType": "number"  
+        #       },
+        #       {
+        #         "name": "station",
+        #         "dataType": "string"
+        #       },
+        #       {
+        #         "name": "data",
+        #         "dataType": "string"
+        #       },  
+        #       {
+        #         "name": "avgSnr",
+        #         "dataType": "number"
+        #       },
+        #       {
+        #         "name": "rssi",
+        #         "dataType": "number"
+        #       }, 
+        #       {
+        #         "name": "seqNumber",
+        #         "dataType": "number"
+        #       },  
+        #       {
+        #         "name": "pulse",
+        #         "dataType": "number"
+        #       }, 
+        #       {
+        #         "name": "battery",
+        #         "dataType": "number"
+        #       },  
+        #       {            
+        #         "name": "totalflow",
+        #         "dataType": "number"             
+        #       }
+        #     ],
+        #     "deviceClass": "standalone"
+        #   }
+        #   client = LosantRest::Client.new(auth_token: session[:losant_auth_token], url: "https://api.losant.com")
+        #   result = client.devices.post(applicationId: ENV['LOSANT_APP_ID'], device: my_device)
+        # rescue => e
+        #   @error = e.to_s              
+        #   flash[:failure] = @error
+        #   return render :action => 'new'
+        # end
         #========================================================# 
         # End save as new Dashboard in Losant
         #========================================================# 

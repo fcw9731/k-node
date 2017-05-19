@@ -70,7 +70,7 @@ var initWTHC = function (capacity, chartId) {
 
       series: [{
           name: 'Water Level',
-          data: [0],
+          data: [400],
           tooltip: {
               valueSuffix: ' L'
           },
