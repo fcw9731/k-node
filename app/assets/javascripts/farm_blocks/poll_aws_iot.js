@@ -11,7 +11,7 @@ function poll (params) {
 
   xmlResponse.done(function(response){
 
-    devices = response.devices
+    var devices = response.devices
 
     // console.log("==devices===", devices);
 
