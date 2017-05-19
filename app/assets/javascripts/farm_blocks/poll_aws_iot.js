@@ -7,7 +7,7 @@ function poll (params) {
       dataType: 'json'
     };
 
-  xmlResponse = $.ajax(requestOptions);
+  var xmlResponse = $.ajax(requestOptions);
 
   xmlResponse.done(function(response){
 
