@@ -13,16 +13,16 @@ var initWTHC = function (capacity, chartId) {
   $('#water-tank' + chartId).highcharts({
 
       chart: {
-          type: 'gauge',
-          // Edit chart spacing
-          spacingBottom: 15,
-          spacingTop: 15,
-          spacingLeft: 10,
-          spacingRight: 10,
+        type: 'gauge',
+        // Edit chart spacing
+        spacingBottom: 15,
+        spacingTop: 15,
+        spacingLeft: 10,
+        spacingRight: 10,
       },
 
       title: {
-          text: ''
+        text: ''
       },
 
       plotOptions: {
@@ -53,29 +53,28 @@ var initWTHC = function (capacity, chartId) {
           },
 
           plotBands: [{
-                from: 0,
-                to: (capacity/10),
-                color: '#DF5353' // red
+              from: 0,
+              to: (capacity/10),
+              color: '#DF5353' // red
             }, {
-                from: capacity/10,
-                to: (capacity/10) * 3,
-                color: '#DDDF0D' // yellow
+              from: capacity/10,
+              to: (capacity/10) * 3,
+              color: '#DDDF0D' // yellow
             }, {
-                from: (capacity/10) * 3,
-                to: capacity,
-                color: '#55BF3B' // green
+              from: (capacity/10) * 3,
+              to: capacity,
+              color: '#55BF3B' // green
             }]
-
         },
 
       series: [{
           name: 'Water Level',
           data: [0],
           tooltip: {
-              valueSuffix: ' L'
+            valueSuffix: ' L'
           },
           dataLabels: {
-                className: 'dataLabels',
+            className: 'dataLabels',
           },
       }]
 

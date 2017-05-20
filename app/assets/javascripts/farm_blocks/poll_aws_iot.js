@@ -11,9 +11,7 @@ function poll (params) {
 
   xmlResponse.done(function(response){
 
-    var devices = response.devices
-
-    // console.log("===devices===", devices);
+    var devices = response.devices  
 
     for (var i in devices.water_tanks){
       var waterTank = devices.water_tanks[i];

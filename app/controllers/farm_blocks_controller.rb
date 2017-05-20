@@ -100,7 +100,7 @@ class FarmBlocksController < ApplicationController
 
           output = {}
           output[:name] = inflmt.name
-          output[:capacity] = '2000' #inflmt.calibration_unit
+          output[:capacity] = inflmt.calibration_unit
 
           if inflmt.location
             output[:longitude] = inflmt.location.longitude
