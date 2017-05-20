@@ -110,8 +110,8 @@ water.farm_blocks.first.inflow_meters.create!(
   # capacity: 25000,
   name: "1C8E99-1",
   device_EUI: "590bc819d8f11a0001e6aad5",
-  calibration_unit: 10,
-  daily_consent: 100
+  calibration_unit: 0,
+  daily_consent: 0
 )
 
 water.farm_blocks.first.inflow_meters.create!(
@@ -119,27 +119,27 @@ water.farm_blocks.first.inflow_meters.create!(
   # capacity: 25000,
   name: "1C8E99-2",
   device_EUI: "590fe3dec2e38c0001dc78de",
-  calibration_unit: 10,
-  daily_consent: 100
+  calibration_unit: 0,
+  daily_consent: 0
 )
 
-water.farm_blocks.first.inflow_meters.create!(
-  # height: 2.5,
-  # capacity: 25000,
-  name: "4D517B-1",
-  device_EUI: "59117f24c2e38c0001dc7949",
-  calibration_unit: 10,
-  daily_consent: 100
-)
+# water.farm_blocks.first.inflow_meters.create!(
+#   # height: 2.5,
+#   # capacity: 25000,
+#   name: "4D517B-1",
+#   device_EUI: "59117f24c2e38c0001dc7949",
+#   calibration_unit: 10,
+#   daily_consent: 100
+# )
 
-water.farm_blocks.first.inflow_meters.create!(
-  # height: 2.5,
-  # capacity: 25000,
-  name: "4D5185-1",
-  device_EUI: "59117c78c2e38c0001dc7948",
-  calibration_unit: 10,
-  daily_consent: 100
-)
+# water.farm_blocks.first.inflow_meters.create!(
+#   # height: 2.5,
+#   # capacity: 25000,
+#   name: "4D5185-1",
+#   device_EUI: "59117c78c2e38c0001dc7948",
+#   calibration_unit: 10,
+#   daily_consent: 100
+# )
 
 
 # mike.farm_blocks.first.inflow_meters.create!(
@@ -174,6 +174,19 @@ water.farm_blocks.first.inflow_meters.create!(
 # calibration_unit: 10,
 # daily_consent: 100)
 
+# Create Water Tank
+# WaterTank.create!(farm_block_id: 1,
+#                   height: '0',
+#                   capacity: '100',
+#                   name: 'Flow Meter Knode',
+#                   device_EUI: '5911a974c2e38c0001dc794b')
+
+
+WaterTank.create!(farm_block_id: 1,
+                  height: '0',
+                  capacity: '100',
+                  name: 'Tank Level Knode',
+                  device_EUI: '59117c78c2e38c0001dc7948')
 
 # Location seed
 

@@ -24,17 +24,22 @@ class SensorData
 
   def SensorData.convert_timestamp_to_datetime(ts)
 
-    ts_string = ts.to_s[0,10] #we don't need the last 3 digits of information  
+    # ts_string = ts.to_s[0,10] #we don't need the last 3 digits of information  
 
-    datetime = DateTime.strptime(ts_string, '%s')
+    # datetime = DateTime.strptime(ts_string, '%s')
 
-    time = datetime.to_time.strftime("%H:%M:%S %P")
-    date = datetime.to_date
+    # time = datetime.to_time.strftime("%H:%M:%S %P")
+    # date = datetime.to_date
 
-    new_datetime = "#{date} #{time}"
+    # new_datetime = "#{date} #{time}"
 
-    return new_datetime
+    # datetime = DateTime.strptime(ts, '%s')
 
+    # return datetime.to_date
+        
+    date = ts.slice(0, 10)
+    time = ts.slice(11, 8)
+    return "#{date} #{time}"
   end
 
   def SensorData.thing_exists?(thing_name)
