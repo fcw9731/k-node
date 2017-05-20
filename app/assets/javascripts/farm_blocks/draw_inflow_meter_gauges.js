@@ -6,6 +6,7 @@ function drawInflowMeterGauges (devices) {
 }
 
 function initIMHC(id){
+  
   var gaugeOptions = {
 
        chart: {
