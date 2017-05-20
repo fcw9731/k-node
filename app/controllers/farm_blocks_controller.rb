@@ -147,11 +147,25 @@ class FarmBlocksController < ApplicationController
     client = LosantRest::Client.new(auth_token: session[:losant_auth_token], url: "https://api.losant.com")
 
     #================ Water tank ================#
-    # fb.water_tanks.each do |wt|
-    #   fb_devices[:water_tanks].push({device: wt, type: "water-tank", deviceAlerts: wt.alerts})
-    # end
+    fb.water_tanks.each do |wt|
+      fb_devices[:water_tanks].push({device: wt, type: "water-tank", deviceAlerts: wt.alerts})
+    end
     
-    # fb_devices[:water_tanks].each do |device_object|
+    fb_devices[:water_tanks].each do |device_object|
+      device_EUI = device_object[:device].device_EUI
+      losant_device_info = client.device.get(applicationId: ENV['LOSANT_APP_ID'], deviceId: device_EUI)
+      losant_device_state = client.device.get_state(applicationId: ENV['LOSANT_APP_ID'], deviceId: device_EUI)
+
+      if losant_device_info['lastUpdated'] != ''
+        device_object[:sensor_health] = {message: "Online", online_status: true}
+      else
+        device_object[:sensor_health] = {message: "Offline", online_status: false}
+      end              
+
+      device_object[:latest_reading] = { timestamp: SensorData.convert_timestamp_to_datetime(losant_device_info['lastUpdated']) }      
+      device_object[:data] = losant_device_state[0]['data']['tank_level'].round(2)
+          
+
     #   if SensorData.thing_exists?(device_object[:device].device_EUI)
     #     resp        = SensorData.get_shadow(device_object)
     #     parsed_data = SensorData.parse_shadow(resp)
@@ -161,7 +175,7 @@ class FarmBlocksController < ApplicationController
     #     message: "Offline",
     #     online_status: false
     #   }
-    # end
+    end
 
     # fb_devices[:water_tanks].each do |device_object|
 
@@ -178,13 +192,13 @@ class FarmBlocksController < ApplicationController
 
     #       if is_water_tank?(device_object)
 
-    #         raw_data = shadow["data"]
-    #         device = device_object[:device]
-    #         timestamp = shadow["ts"]
-    #         data = WaterTankData.new(device, raw_data, timestamp)
-    #         decimal_number = convert_base64_to_decimal(raw_data)
-    #         volume = data.calculate_volume(decimal_number, device_object[:device])
-    #         device_object[:latest_reading][:data] = volume
+            # raw_data = shadow["data"]
+            # device = device_object[:device]
+            # timestamp = shadow["ts"]
+            # data = WaterTankData.new(device, raw_data, timestamp)
+            # decimal_number = convert_base64_to_decimal(raw_data)
+            # volume = data.calculate_volume(decimal_number, device_object[:device])
+            # device_object[:latest_reading][:data] = volume
     #       end
     #     end
     #   end
@@ -211,8 +225,8 @@ class FarmBlocksController < ApplicationController
         device_object[:sensor_health] = {message: "Offline", online_status: false}
       end              
 
-      device_object[:latest_reading] = { timestamp: losant_device_info['lastUpdated'] }
-      device_object[:avgSnr] = losant_device_state[0]['data']['avgSnr']
+      device_object[:latest_reading] = { timestamp: SensorData.convert_timestamp_to_datetime(losant_device_info['lastUpdated']) }
+      device_object[:data] = losant_device_state[0]['data']['totalflow']
     end  
 
     # fb_devices[:inflow_meters].each do |device_object|

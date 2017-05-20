@@ -9,7 +9,7 @@ var loadGauge = function (device, index, type){
     // var data = parseInt(atob(rawData));
 
     // injectDataToGauge(gauge, device.latest_reading.data);
-    injectDataToGauge(gauge, device.avgSnr);
+    injectDataToGauge(gauge, device.data);
     
     updateLatestReading(device, index);
   }

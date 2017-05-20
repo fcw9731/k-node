@@ -1,4 +1,4 @@
-    require File.expand_path('../boot', __FILE__)
+require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
@@ -35,5 +35,6 @@ module Knode
       end if File.exists?(env_file)
     end
     
+    # config.log_level = :debug
   end
 end

@@ -51,6 +51,8 @@ Rails.application.configure do
   #   password: Rails.application.secrets.gmail_password
   # }
 
+  # config.log_level = :debug
+
   config.action_mailer.smtp_settings = {
     :address => "email-smtp.us-east-1.amazonaws.com",
     :port => 587,

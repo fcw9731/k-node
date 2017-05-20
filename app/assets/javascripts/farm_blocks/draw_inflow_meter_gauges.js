@@ -1,5 +1,4 @@
-function drawInflowMeterGauges (devices) {
-  // console.log("===AAA===", devices);
+function drawInflowMeterGauges (devices) {  
   for (var i in devices){
     var device = devices[i];
     initIMHC(i);
@@ -7,8 +6,6 @@ function drawInflowMeterGauges (devices) {
 }
 
 function initIMHC(id){
-  // console.log("===ID===", id);
-
   var gaugeOptions = {
 
        chart: {

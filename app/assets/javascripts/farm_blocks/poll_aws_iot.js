@@ -13,6 +13,8 @@ function poll (params) {
 
     var devices = response.devices
 
+    // console.log("===devices===", devices);
+
     for (var i in devices.water_tanks){
       var waterTank = devices.water_tanks[i];
       loadGauge(waterTank, i, waterTank.type);
