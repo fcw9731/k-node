@@ -227,7 +227,7 @@ class FarmBlocksController < ApplicationController
 
       device_object[:latest_reading] = { timestamp: SensorData.convert_timestamp_to_datetime(losant_device_info['lastUpdated']) }
       # device_object[:data] = losant_device_state[0]['data']['totalflow']
-      device_object[:data] = losant_device_state[0]['data']['avgflowrate']
+      device_object[:data] = losant_device_state[0]['data']['avgflowrate'].round(2)
     end  
 
     # fb_devices[:inflow_meters].each do |device_object|
