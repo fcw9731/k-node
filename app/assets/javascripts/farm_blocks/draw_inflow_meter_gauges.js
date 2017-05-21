@@ -59,7 +59,7 @@ function initIMHC(id){
    $('#inflow-meter' + id).highcharts(Highcharts.merge(gaugeOptions, {
        yAxis: {
          min: 0,
-         max: 100,
+         max: 60,
        },
 
        credits: {

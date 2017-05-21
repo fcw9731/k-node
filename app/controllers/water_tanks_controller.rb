@@ -145,7 +145,7 @@ class WaterTanksController < ApplicationController
     #     message: message,
     #     error:   error
     #   }
-    #   gon.water_tank[:data] = []
+      gon.water_tank[:data] = []
     # rescue Aws::DynamoDB::Errors::ValidationException => error
     #   puts error
     #   message = "There is a problem with your sensor's device EUI!"
@@ -163,7 +163,7 @@ class WaterTanksController < ApplicationController
     #     flow_data
     #   end
 
-    #   gon.water_tank[:data] = calculated_data
+      gon.water_tank[:data] = 86.30
     # end
 
     gon.water_tank[:sensor] = @water_tank

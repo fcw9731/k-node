@@ -17,6 +17,8 @@ $(document).ready(function(){
 
 
 function LineChart () {
+  // console.log("==gon data==", gon.water_tank.data);
+
   var daysSelected, hours, chartData, timeBack;
   var currentTime = Date.now();
 
@@ -31,10 +33,11 @@ function LineChart () {
 
   chartData = initialiseChartData (minutes);
 
-  var sensorData = gon.water_tank.data.map(function(entry){
-    return new SensorData (entry.volume, null, entry.timestamp);
-  })
+  // var sensorData = gon.water_tank.data.map(function(entry){
+  //   return new SensorData (entry.volume, null, entry.timestamp);
+  // })
 
+  var sensorData  = gon.water_tank.data;
   var dataWithinDate = getDataByDate (sensorData, daysSelected);
 
   for (var i = 0; i < dataWithinDate.length; i++) {
