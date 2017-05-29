@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
       #   authStatus = client.auth.authenticate_user(credentials: myCredentials)
       #   if authStatus
       #     session[:losant_auth_token] = authStatus['token']
-      #     redirect_to root_path        
+          redirect_to root_path        
       #   end
       # rescue => e
       #   flash[:failure] = "User Unauthorized with Losant"
