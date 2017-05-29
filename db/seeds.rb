@@ -142,37 +142,37 @@ water.farm_blocks.first.inflow_meters.create!(
 # )
 
 
-# mike.farm_blocks.first.inflow_meters.create!(
-# # height: 2.5,
-# # capacity: 25000,
-# name: "Mike's Inflow Meter",
-# device_EUI: "00000000C1D10B7F",
-# calibration_unit: 10,
-# daily_consent: 100)
+mike.farm_blocks.first.inflow_meters.create!(
+# height: 2.5,
+# capacity: 25000,
+name: "Mike's Inflow Meter",
+device_EUI: "00000000C1D10B7F",
+calibration_unit: 10,
+daily_consent: 100)
 
-# richie.farm_blocks.first.inflow_meters.create!(
-# # height: 2.5,
-# # capacity: 25000,
-# name: "Richie's Inflow Meter",
-# device_EUI: "00000000C1D10B7F",
-# calibration_unit: 10,
-# daily_consent: 100)
+richie.farm_blocks.first.inflow_meters.create!(
+# height: 2.5,
+# capacity: 25000,
+name: "Richie's Inflow Meter",
+device_EUI: "00000000C1D10B7F",
+calibration_unit: 10,
+daily_consent: 100)
 
-# scott.farm_blocks.first.inflow_meters.create!(
-# # height: 2.5,
-# # capacity: 25000,
-# name: "Scott's Inflow Meter",
-# device_EUI: "00000000C1D10B7F",
-# calibration_unit: 10,
-# daily_consent: 100)
+scott.farm_blocks.first.inflow_meters.create!(
+# height: 2.5,
+# capacity: 25000,
+name: "Scott's Inflow Meter",
+device_EUI: "00000000C1D10B7F",
+calibration_unit: 10,
+daily_consent: 100)
 
-# marcus.farm_blocks.first.inflow_meters.create!(
-# # height: 2.5,
-# # capacity: 25000,
-# name: "Marcus' Inflow Meter",
-# device_EUI: "00000000C1D10B7F",
-# calibration_unit: 10,
-# daily_consent: 100)
+marcus.farm_blocks.first.inflow_meters.create!(
+# height: 2.5,
+# capacity: 25000,
+name: "Marcus' Inflow Meter",
+device_EUI: "00000000C1D10B7F",
+calibration_unit: 10,
+daily_consent: 100)
 
 # Create Water Tank
 # WaterTank.create!(farm_block_id: 1,
@@ -209,21 +209,21 @@ create_locations
 
 # Address seed
 
-# def create_addresses
-#   FarmBlock.all.each do |fb|
-#     Address.create!(address_one: Faker::Address.street_address,
-#                     address_two: Faker::Address.secondary_address,
-#                     state: Faker::Address.state,
-#                     city: Faker::Address.city,
-#                     post_code: Faker::Address.postcode,
-#                     farm_block_id: fb.id)
-#   end
-# end
-#
-# create_addresses
+def create_addresses
+  FarmBlock.all.each do |fb|
+    Address.create!(address_one: Faker::Address.street_address,
+                    address_two: Faker::Address.secondary_address,
+                    state: Faker::Address.state,
+                    city: Faker::Address.city,
+                    post_code: Faker::Address.postcode,
+                    farm_block_id: fb.id)
+  end
+end
+
+create_addresses
 
 # Meter Seed
 
-# Meter.create!(name: "Meter 1C8E99-1",
-#               type: "Inflow",
-#               farm_block_id: 1)
+Meter.create!(name: "Meter 1C8E99-1",
+              type: "Inflow",
+              farm_block_id: 1)
