@@ -65,6 +65,8 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :aws_sdk
 
   config.action_mailer.default_url_options = { host: "localhost:3000" }
+
+  config.log_level = :error
 end
 
 AWS_ACCESS_KEY_ID = Rails.application.secrets.aws_access_key_id

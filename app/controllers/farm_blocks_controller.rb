@@ -141,7 +141,7 @@ class FarmBlocksController < ApplicationController
     fb_devices = {
       water_tanks: [],
       inflow_meters: []
-    }
+    }    
 
     fb = FarmBlock.find(params[:id])
     client = LosantRest::Client.new(auth_token: session[:losant_auth_token], url: "https://api.losant.com")

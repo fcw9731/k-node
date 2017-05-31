@@ -35,6 +35,6 @@ module Knode
       end if File.exists?(env_file)
     end
     
-    # config.log_level = :debug
+    config.log_level = :error
   end
 end
