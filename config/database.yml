@@ -31,8 +31,8 @@ development:
   adapter: postgresql
   encoding: unicode
   database: knode_development
-  # username: postgres
-  # password: 1234
+  username: postgres
+  password: 1234
   pool: 5
 
 test:

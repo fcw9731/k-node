@@ -37,11 +37,16 @@
             </div>
 
             <div class="row center">
-                <%= submit_tag "Login", class: "btn btn-lg btn-primary btn-bloc"%>
-            </div>
+              <%= submit_tag "Login", class: "btn btn-lg btn-primary btn-bloc"%>
+            </div> 
 
+
+            <div class="form-group">
+              <h6>Have not account? Click here to <%= link_to("SignUp", new_user_path) %></h6>
+            </div>
           </fieldset>
         <%end%>
+
       </div>
       </div>
     </div>

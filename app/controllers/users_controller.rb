@@ -13,6 +13,9 @@ class UsersController < ApplicationController
     if @user.save
       # mail = UserMailer.new_user(@user)
       # mail.deliver_later
+
+      # Save user info to Losant also
+      
       redirect_to root_path
     else
       @errors = @user.errors.messages
