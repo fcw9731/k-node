@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  require "losant_rest"
 
   def new
     @user = User.new
@@ -14,9 +15,31 @@ class UsersController < ApplicationController
       # mail = UserMailer.new_user(@user)
       # mail.deliver_later
 
-      # Save user info to Losant also
-      
-      redirect_to root_path
+      #========================================================# 
+      # Save user to Losant
+      #========================================================# 
+      begin        
+        _user_info = {
+          "email": user_params['email'],
+          "firstName": user_params['first_name'],
+          "lastName": user_params['last_name'],
+          "password": user_params['password'],
+          "userTags": {            
+            "phone": user_params['phone']
+          }
+        }    
+        client = LosantRest::Client.new(auth_token: ENV['LOSANT_API_TOKEN'], url: "https://api.losant.com")                
+        registerStatus = client.experience_users.post(applicationId: ENV['LOSANT_APP_ID'], experienceUser: _user_info)        
+        if registerStatus
+          redirect_to root_path
+        end
+      rescue => e
+        flash[:failure] = e        
+        render :action => 'new'
+      end
+      #========================================================# 
+      # End Save user to Losant
+      #========================================================#  
     else
       @errors = @user.errors.messages
       render :action => 'new'

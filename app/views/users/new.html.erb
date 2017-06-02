@@ -5,8 +5,16 @@
     <h2>Sign up</h2>
 
   </div>
-
   <div class="row">
+
+  
+    <div class="form-group" style="text-align:center;color:#ff0000">
+      <p><strong><%if flash[:failure]%>        
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+      <%end%></strong></p>
+    </div>
 
     <% if @errors %>
     <ul class="collection col s12 m6 push-m3">
@@ -14,9 +22,9 @@
         <%@errors.each do |error| %>
           <%=render "shared/error", locals: {error: error}%>
         <%end%>
-    </div>
-  </ul>
-    <%end%>
+      </div>
+    </ul>
+    <%end%>    
   </div>
 
   <div class="row">
