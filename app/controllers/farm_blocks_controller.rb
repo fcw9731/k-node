@@ -141,10 +141,12 @@ class FarmBlocksController < ApplicationController
     fb_devices = {
       water_tanks: [],
       inflow_meters: []
-    }    
+    }
+        
+    # logger.debug "===PARAMS====#{params.inspect}"
 
     fb = FarmBlock.find(params[:id])
-    client = LosantRest::Client.new(auth_token: session[:losant_auth_token], url: "https://api.losant.com")
+    client = LosantRest::Client.new(auth_token: ENV['LOSANT_API_TOKEN'], url: "https://api.losant.com")
 
     #================ Water tank ================#
     fb.water_tanks.each do |wt|
@@ -162,7 +164,7 @@ class FarmBlocksController < ApplicationController
         device_object[:sensor_health] = {message: "Offline", online_status: false}
       end              
 
-      device_object[:latest_reading] = { timestamp: SensorData.convert_timestamp_to_datetime(losant_device_info['lastUpdated']) }      
+      device_object[:latest_reading] =  { timestamp: SensorData.convert_timestamp_to_datetime(losant_device_state[0]['time']) }      
       device_object[:data] = losant_device_state[0]['data']['tank_level'].round(2)
           
 
@@ -227,7 +229,7 @@ class FarmBlocksController < ApplicationController
 
       device_object[:latest_reading] = { timestamp: SensorData.convert_timestamp_to_datetime(losant_device_info['lastUpdated']) }
       # device_object[:data] = losant_device_state[0]['data']['totalflow']
-      device_object[:data] = losant_device_state[0]['data']['avgflowrate'].round(2)
+      device_object[:data] = losant_device_state[0]['data']['avgflowrate'].round(2) != nil ? losant_device_state[0]['data']['avgflowrate'].round(2) : ''
     end  
 
     # fb_devices[:inflow_meters].each do |device_object|

@@ -26,6 +26,8 @@ $(document).ready(function(){
 	var fbID = window.location.pathname[window.location.pathname.length - 1];	
 	var deviceParams = {"id": fbID};
 
+	// console.log("===FARM ID===", deviceParams);
+
 	poll(deviceParams);
 
 });

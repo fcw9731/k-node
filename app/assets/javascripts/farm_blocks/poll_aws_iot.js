@@ -1,4 +1,6 @@
 function poll (params) {
+
+  // console.log("==Poll==", params)
   
   var requestOptions = {
       url: '/data',
@@ -12,6 +14,8 @@ function poll (params) {
   xmlResponse.done(function(response){
 
     var devices = response.devices  
+
+    // console.log("=DEVICES==", devices);
 
     for (var i in devices.water_tanks){
       var waterTank = devices.water_tanks[i];
