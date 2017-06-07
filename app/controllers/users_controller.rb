@@ -27,9 +27,62 @@ class UsersController < ApplicationController
           "userTags": {            
             "phone": user_params['phone']
           }
-        }    
-        client = LosantRest::Client.new(auth_token: ENV['LOSANT_API_TOKEN'], url: "https://api.losant.com")                
-        registerStatus = client.experience_users.post(applicationId: ENV['LOSANT_APP_ID'], experienceUser: _user_info)        
+        }
+
+
+        test_url="https://590bc7a2c8f13000014788c5.onlosant.com/users"
+
+        body_hash={"email"=> user_params['email'], "password"=>user_params['password']}
+
+        body_json=body_hash.to_json
+
+
+
+
+        def send_data(test_url,body_hash)
+
+          data=body_hash
+
+          data=data.to_json
+
+          puts "data for json is #{data}"
+
+          url = URI.parse(test_url)
+
+          req = Net::HTTP::Post.new(url.path,{'Content-Type' => 'application/json'})
+
+          req.body = data
+
+          begin
+
+            res = Net::HTTP.new(url.host,url.port).start do |http|
+
+              http.read_timeout=5
+
+              http.request(req)
+
+            end
+
+          rescue Exception
+
+            res = ''
+
+            puts "error:#{$!} at:#{$@}!"
+
+            puts "post to dest failed!"
+
+            return 1
+          end
+
+          post_res=res.body
+
+          puts "post result is #{post_res}"
+
+        end
+
+##############################################################################################################################
+        client = LosantRest::Client.new(auth_token: ENV['LOSANT_API_TOKEN'], url: "https://api.losant.com")
+        registerStatus = client.experience_users.post(applicationId: ENV['LOSANT_APP_ID'], experienceUser: _user_info)
         if registerStatus
           # Only save user to local DB, after saved on Losant
           @user.save
