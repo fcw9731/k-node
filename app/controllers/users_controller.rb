@@ -28,8 +28,8 @@ class UsersController < ApplicationController
             "phone": user_params['phone']
           }
         }    
-        client = LosantRest::Client.new(auth_token: ENV['LOSANT_API_TOKEN'], url: "https://api.losant.com")                
-        registerStatus = client.experience_users.post(applicationId: ENV['LOSANT_APP_ID'], experienceUser: _user_info)        
+       # client = LosantRest::Client.new(auth_token: ENV['LOSANT_API_TOKEN'], url: "https://api.losant.com")                
+       # registerStatus = client.experience_users.post(applicationId: ENV['LOSANT_APP_ID'], experienceUser: _user_info)        
         if registerStatus
           # Only save user to local DB, after saved on Losant
           @user.save
